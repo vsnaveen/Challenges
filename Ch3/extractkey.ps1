@@ -9,7 +9,11 @@
 # key = x/y/z
 # value = a
 
-function Get-NestedValue {
+#solution-1
+$t=$object;$key.split('/') | %{$t=$t.$_};$t
+
+#solution-2
+function Get-ExtractDict {
     param(
         [Parameter(Mandatory=$true)]
         [Object]$Object,
@@ -18,9 +22,9 @@ function Get-NestedValue {
     )
 
     $keys = $Key.split(‘/‘)
-    $value = $Object
+    $temp = $Object
     foreach ($k in $keys) {
-        $value = $value.$k
+        $temp = $temp.$k
     }
     return $value
 }
